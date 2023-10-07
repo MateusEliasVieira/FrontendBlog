@@ -1,15 +1,53 @@
-import React from "react";
+import React, {useState} from "react";
 import "./FormLogin.css"
-import {Button, Form} from "react-bootstrap";
-import MyInput from "../../../components/myinput/MyInput.tsx"
+import Alert from "../../../components/alerts/Alert.tsx";
+
 const FormLogin:React.FC = () => {
+
+    const [username,setUsername] = useState("");
+    const [password,setPassword] = useState("");
+    const [message,setMessage] = useState("");
+
+    const validate: boolean = () => {
+        return username !== "" && password !== "";
+    };
+
+    const sendData = async ()=>{
+        if(validate()){
+            try{
+                // Resolve()
+                const response = await fetch(
+                    "http://localhost:8080/login/enter", {
+                        method:"POST",
+                        headers:{
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({"username":username,"password":password})
+                })
+                const json = await response.json();
+                console.log(json)
+            }catch (e) {
+                // Reject()
+                console.log(e)
+                setMessage("Invalid login")
+            }
+        }else{
+            setMessage("Fill in all fields!")
+        }
+
+    }
     return(
-        <Form className="form-login">
-            <MyInput classGroup="mb-3" typeInput="text" textLabel="Username"/>
-            <MyInput classGroup="mb-3" typeInput="password" textLabel="Password"/>
-            <Button variant="outline-dark">Enter</Button>
+        <div className="form-login">
+            {message != ""?<Alert typeAlert="alert alert-danger" message={message}/>:<h4>Hi User!</h4>}
+            <input className="form form-control" type="text" placeholder="Username" onChange={event=>setUsername(event.target.value)}/>
+            <input className="form form-control" type="password" placeholder="Password" onChange={event=>setPassword(event.target.value)}/>
+            <button className="btn btn-outline-dark"
+            onClick={(event)=>{
+                event.preventDefault();
+                sendData();
+            }}>Enter</button>
             <a href="#">Create account</a>
-        </Form>
+        </div>
     )
 }
 
