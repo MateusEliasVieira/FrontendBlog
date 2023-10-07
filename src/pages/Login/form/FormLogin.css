@@ -1,0 +1,19 @@
+.form-login{
+    max-width: 400px;
+    min-width: 380px;
+    height: 300px;
+    padding: 30px;
+    box-shadow: 0px 0px 40px #dcdada;
+}
+.form-login > a{
+    display: block;
+    text-align: end;
+    text-decoration: none;
+    color: dodgerblue;
+}
+.form-login > button{
+    width: 100px;
+}
+.form-login > div > input{
+    font-size: 18px;
+}
