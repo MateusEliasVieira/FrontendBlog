@@ -1,59 +1,61 @@
-import React from "react";
-import Wallp from "../../assets/images/wallp.jpg";
+import React, {useEffect, useState} from "react";
 import Post from "../../components/post/Post.tsx";
 import "./Feed.css"
+import MyNavbar from "../../components/mynavbar/MyNavbar.tsx";
 
 const Feed:React.FC = ()=>{
-    return(
+
+    const[data,setData]=useState([])
+
+    useEffect(() => {
+        if(!localStorage.getItem("token")){
+            window.location.href="/";
+        }else{
+            findAllPosts()
+        }
+    }, []);
+
+    const findAllPosts = async ()=>{
+        console.log("TOken "+localStorage.getItem("token"))
+        try {
+            // Resolve()
+            const response = await fetch("http://localhost:8080/posts/all",{
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":`Bearer ${localStorage.getItem("token")}`
+                },
+                method:"GET"
+            })
+            const json = await response.json()
+            console.log(json)
+            setData(json)
+        }catch (e) {
+            // Reject()
+            console.log(e)
+        }
+    }
+
+      return(
+        <>
+        <MyNavbar/>
         <section id="section-feed">
             <section id="section-posts">
-            <Post
-                titlePost="What is Lorem Ipsum?"
-                srcImage={Wallp}
-                nameUserPost="Mateus Elias Vieira"
-                datePublishPost="06/10/2023"
-                widthImage="100%"
-                heightImage="200"
-                contentPost="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book..."
-              />
-                <Post
-                titlePost="What is Lorem Ipsum?"
-                srcImage={Wallp}
-                nameUserPost="Mateus Elias Vieira"
-                datePublishPost="06/10/2023"
-                widthImage="100%"
-                heightImage="200"
-                contentPost="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book..."
-              />
-                <Post
-                titlePost="What is Lorem Ipsum?"
-                srcImage={Wallp}
-                nameUserPost="Mateus Elias Vieira"
-                datePublishPost="06/10/2023"
-                widthImage="100%"
-                heightImage="200"
-                contentPost="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book..."
-              />
-                <Post
-                titlePost="What is Lorem Ipsum?"
-                srcImage={Wallp}
-                nameUserPost="Mateus Elias Vieira"
-                datePublishPost="06/10/2023"
-                widthImage="100%"
-                heightImage="200"
-                contentPost="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book..."
-              />
-                <Post
-                titlePost="What is Lorem Ipsum?"
-                srcImage={Wallp}
-                nameUserPost="Mateus Elias Vieira"
-                datePublishPost="06/10/2023"
-                widthImage="100%"
-                heightImage="200"
-                contentPost="is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book..."
-              />
+                {
+                    data.map((post)=>(
+                        <Post
+                            titlePost={post.title}
+                            srcImage={post.image}
+                            nameUserPost={post.user.name}
+                            datePublishPost={post.datePublish.split("T")[0].split("").map(s=>s.replace("-","/"))}
+                            widthImage="100%"
+                            heightImage="200"
+                            contentPost={post.content}
+                        />
+                    ))
+                }
             </section>
         </section>
+        </>
     )
 }
 

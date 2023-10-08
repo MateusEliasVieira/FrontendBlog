@@ -8,7 +8,7 @@ const FormLogin:React.FC = () => {
     const [password,setPassword] = useState("");
     const [message,setMessage] = useState("");
 
-    const validate: boolean = () => {
+    const validate = () => {
         return username !== "" && password !== "";
     };
 
@@ -24,8 +24,11 @@ const FormLogin:React.FC = () => {
                         },
                         body: JSON.stringify({"username":username,"password":password})
                 })
-                const json = await response.json();
-                console.log(json)
+                const {idUser,token} = await response.json();
+                localStorage.clear()
+                localStorage.setItem("idUser",idUser);
+                localStorage.setItem("token",token);
+                window.location.href="/feed"
             }catch (e) {
                 // Reject()
                 console.log(e)
@@ -34,7 +37,6 @@ const FormLogin:React.FC = () => {
         }else{
             setMessage("Fill in all fields!")
         }
-
     }
     return(
         <div className="form-login">
@@ -43,8 +45,7 @@ const FormLogin:React.FC = () => {
             <input className="form form-control" type="password" placeholder="Password" onChange={event=>setPassword(event.target.value)}/>
             <button className="btn btn-outline-dark"
             onClick={(event)=>{
-                event.preventDefault();
-                sendData();
+                event.preventDefault();sendData();
             }}>Enter</button>
             <a href="#">Create account</a>
         </div>
