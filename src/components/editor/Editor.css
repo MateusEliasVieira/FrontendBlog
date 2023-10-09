@@ -1,0 +1,16 @@
+#box-editor{
+    width: 70%;
+    margin: 50px auto 20px auto;
+    padding: 30px;
+    box-shadow: 0px 0px 40px #dcdada;
+}
+.mb-3{
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 750px) {
+  /* Estilos para telas menores que 768px de largura */
+    #box-editor{
+        width: 90%;
+    }
+}

@@ -28,7 +28,7 @@ const FormLogin:React.FC = () => {
                 localStorage.clear()
                 localStorage.setItem("idUser",idUser);
                 localStorage.setItem("token",token);
-                window.location.href="/feed"
+                window.location.href="/Feed"
             }catch (e) {
                 // Reject()
                 console.log(e)
