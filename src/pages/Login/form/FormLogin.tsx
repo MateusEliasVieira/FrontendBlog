@@ -47,7 +47,7 @@ const FormLogin:React.FC = () => {
             onClick={(event)=>{
                 event.preventDefault();sendData();
             }}>Enter</button>
-            <a href="#">Create account</a>
+            <a href="/create-account">Create account</a>
         </div>
     )
 }

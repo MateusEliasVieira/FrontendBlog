@@ -1,36 +1,42 @@
 import React from "react";
 import "./Register.css"
-import {Button, Form} from "react-bootstrap";
 import {BsCupHotFill} from "react-icons/bs";
 const Login:React.FC = () => {
     return(
         <section className="section-login">
-            <Form className="form-login">
-                <Form.Group className="mb-3">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                    <Form.Label>About</Form.Label>
-                    <Form.Control as="textarea" rows={3} />
-                </Form.Group>
-
-                <Button variant="dark">Register <BsCupHotFill/></Button>
-                <a href="#">Sign-in</a>
-            </Form>
+            <div className="form-create-account">
+                <legend>Welcome user</legend>
+                <div className="box-group-inputs-flex">
+                    <div className="box-label-input space-right">
+                        <label className="form-label">Name</label>
+                        <input type="text" className="form-control"/>
+                    </div>
+                    <div className="box-label-input">
+                        <label className="form-label">Email</label>
+                        <input type="email" className="form-control"/>
+                    </div>
+                </div>
+                <div className="box-group-inputs-flex">
+                    <div className="box-label-input space-right">
+                        <label className="form-label">Username</label>
+                        <input type="text" className="form-control"/>
+                    </div>
+                    <div className="box-label-input">
+                        <label className="form-label">Password</label>
+                        <input type="password" className="form-control"/>
+                    </div>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">About</label>
+                    <textarea rows={5} className="form-control"></textarea>
+                </div>
+                <div className="mb-3">
+                   <label className="form-label">Your photo</label>
+                   <input type="file" className="form-control file"/>
+                </div>
+                <button className="btn btn-dark">Register <BsCupHotFill/></button>
+                <a href="/">Sign-in</a>
+            </div>
         </section>
     )
 }
