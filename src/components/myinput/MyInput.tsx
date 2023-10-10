@@ -13,7 +13,7 @@ const MyInput:React.FC<Props> = (props)=>{
     return(
         <Form.Group className={props.classGroup}>
             <Form.Label>{props.textLabel}</Form.Label>
-            <Form.Control type={props.typeInput} onChange={()=>props.fun(props.valueInput)}/>
+            <Form.Control type={props.typeInput} onChange={(event)=>props.fun(event.target.value)}/>
         </Form.Group>
     )
 }

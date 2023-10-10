@@ -43,7 +43,7 @@ const MyNavbar:React.FC = ()=> {
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            <a className="link-navbar-options" href="#login">New</a>
+            <a className="link-navbar-options" href="/new-post">New</a>
           </Navbar.Text>
           <Navbar.Text>
             <a className="link-navbar-options" href="#login">Feed</a>
