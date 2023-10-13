@@ -1,8 +1,12 @@
 import React from "react";
 import "./Post.css"
+import {Link} from "react-router-dom";
+import ReadPost from "../../pages/ReadPost/ReadPost.tsx";
 interface Props{
-    titlePost:string
-    datePublishPost:string
+    key:number;
+    idPost:number;
+    titlePost:string;
+    datePublishPost:string;
     srcImage:string;
     nameUserPost:string;
     widthImage:string;
@@ -11,7 +15,7 @@ interface Props{
 }
 const Post:React.FC<Props> = (props)=>{
     return(
-        <div className="box-post">
+        <div key={props.key} className="box-post">
             <div>
                 <h5 className="title-post">{props.titlePost}</h5>
                 <div className="box-date-user">
@@ -20,7 +24,7 @@ const Post:React.FC<Props> = (props)=>{
                 </div>
             </div>
             <img src={props.srcImage} width={props.widthImage} height={props.heightImage}/>
-            <a className="link-continue-reading" href="#">Continue reading...</a>
+            <Link className="link-continue-reading" to={`/read-post/${props.idPost}`}>Continue reading...</Link>
         </div>
     )
 }

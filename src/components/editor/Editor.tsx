@@ -26,8 +26,8 @@ const Editor:React.FC = ()=>{
 	}
 
 	useEffect(() => {
-		let tk: string = localStorage.getItem("token");
-		setToken(tk);
+		let token_local_storage: string = localStorage.getItem("token");
+		setToken(token_local_storage);
 	}, []);
 
 	const alertMessage = (enabledAlert:boolean,classAlert:string,json:string)=>{
@@ -72,8 +72,10 @@ const Editor:React.FC = ()=>{
 			body: JSON.stringify(data)
 		});
 		const json = await response.json();
-		alertMessage(true,"alert alert-success",json)
-	};
+		console.log(json)
+		setTitle(""); setContent(""); setImage(null);
+		alertMessage(true,"alert alert-success",json.message)
+	}
 
 	return(
 		<div id="box-editor">
@@ -85,7 +87,7 @@ const Editor:React.FC = ()=>{
 					value={content}
 					config={config}
 					onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-					onChange={newContent => {}}/>
+					/>
 			</div>
 			<input type="file" className="mb-3 form-control" onChange={event => { setImage(event.target.files[0]) }} />
 			<button className="btn btn-dark" onClick={()=>{dataValidate()}}>Save</button>

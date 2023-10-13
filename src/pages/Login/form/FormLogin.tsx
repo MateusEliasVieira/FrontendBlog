@@ -25,6 +25,7 @@ const FormLogin:React.FC = () => {
                         body: JSON.stringify({"username":username,"password":password})
                 })
                 const {idUser,token} = await response.json();
+                console.log(token)
                 localStorage.clear()
                 localStorage.setItem("idUser",idUser);
                 localStorage.setItem("token",token);

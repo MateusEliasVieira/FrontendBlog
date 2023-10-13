@@ -42,7 +42,8 @@ const Feed:React.FC = ()=>{
             <section id="section-posts">
                 {
                     data.map((post)=>(
-                        <Post
+                        <Post key={post.idPost}
+                            idPost={post.idPost}
                             titlePost={post.title}
                             srcImage={post.image}
                             nameUserPost={post.user.name}

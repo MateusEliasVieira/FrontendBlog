@@ -46,10 +46,10 @@ const MyNavbar:React.FC = ()=> {
             <a className="link-navbar-options" href="/new-post">New</a>
           </Navbar.Text>
           <Navbar.Text>
-            <a className="link-navbar-options" href="#login">Feed</a>
+            <a className="link-navbar-options" href="/feed">Feed</a>
           </Navbar.Text>
           <Navbar.Text>
-            <a className="link-navbar-options" href="#login">Logoff <AiOutlineLogout/></a>
+            <a className="link-navbar-options" href="/logoff">Logoff <AiOutlineLogout/></a>
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>
