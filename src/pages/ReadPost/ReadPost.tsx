@@ -32,6 +32,18 @@ const ReadPost:React.FC = ()=>{
         searchPost()
     }, []);
 
+    const formatDate = (date: string): string => {
+        if (date !== "") {
+            const dateObj = new Date(date);
+            const day = dateObj.getDate();
+            const month = dateObj.getMonth() + 1; // Os meses são baseados em zero (janeiro = 0)
+            const year = dateObj.getFullYear();
+            return `${day}/${month}/${year}`;
+        } else {
+            return "Invalid date";
+        }
+    }
+
     return(
         <section id="section-read-post">
             <MyNavbar/>
@@ -39,7 +51,7 @@ const ReadPost:React.FC = ()=>{
                 <h1>{data.title}</h1>
                 <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
                 <p><b>Author</b>: {data.user.name}</p>
-                <p><b>Publish</b>: {data.datePublish}</p>
+                <p><b>Publish</b>: {formatDate(data.datePublish)}</p>
             </div>
         </section>
     )

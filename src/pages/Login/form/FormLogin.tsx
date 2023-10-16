@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./FormLogin.css"
 import Alert from "../../../components/alerts/Alert.tsx";
 
@@ -7,6 +7,10 @@ const FormLogin:React.FC = () => {
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [message,setMessage] = useState("");
+
+    useEffect(() => {
+        localStorage.clear()
+    }, []);
 
     const validate = () => {
         return username !== "" && password !== "";

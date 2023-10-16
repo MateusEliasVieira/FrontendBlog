@@ -35,6 +35,18 @@ const Feed:React.FC = ()=>{
         }
     }
 
+    const formatDate = (date: string): string => {
+        if (date !== "") {
+            const dateObj = new Date(date);
+            const day = dateObj.getDate();
+            const month = dateObj.getMonth() + 1; // Os meses são baseados em zero (janeiro = 0)
+            const year = dateObj.getFullYear();
+            return `${day}/${month}/${year}`;
+        } else {
+            return "Invalid date";
+        }
+    }
+
       return(
         <>
         <MyNavbar/>
@@ -47,7 +59,7 @@ const Feed:React.FC = ()=>{
                             titlePost={post.title}
                             srcImage={post.image}
                             nameUserPost={post.user.name}
-                            datePublishPost={post.datePublish.split("T")[0].split("").map(s=>s.replace("-","/"))}
+                            datePublishPost={formatDate(post.datePublish)}
                             widthImage="100%"
                             heightImage="200"
                             contentPost={post.content}

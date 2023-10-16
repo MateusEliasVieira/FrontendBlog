@@ -12,6 +12,7 @@
             <Routes>
                 <Route path="/" element={<Login/>}/>
                 <Route path="/feed" element={<Feed/>}/>
+                <Route path="/logoff" element={<Login/>}/>
                 <Route path="/create-account" element={<Register/>}/>
                 <Route path="/new-post" element={<NewPost/>}/>
                 <Route path="/read-post/:idPost" element={<ReadPost/>}/>
