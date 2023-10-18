@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
+import jwt_decode from "jwt-decode";
 import "./FormLogin.css"
 import Alert from "../../../components/alerts/Alert.tsx";
+import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
 
 const FormLogin:React.FC = () => {
 
@@ -11,6 +13,7 @@ const FormLogin:React.FC = () => {
     useEffect(() => {
         localStorage.clear()
     }, []);
+
 
     const validate = () => {
         return username !== "" && password !== "";
@@ -53,6 +56,22 @@ const FormLogin:React.FC = () => {
                 event.preventDefault();sendData();
             }}>Enter</button>
             <a href="/create-account">Create account</a>
+            <GoogleOAuthProvider
+                clientId="35562681448-pvo40n919fgpra4o5sr96p7re3t0vlrp.apps.googleusercontent.com">
+                <GoogleLogin
+                    
+                    onSuccess={credentialResponse => {
+                        var decoded = jwt_decode(credentialResponse.credential)
+                        console.log(decoded);
+                    }}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
+                    useOneTap
+                />
+            </GoogleOAuthProvider>
+
+
         </div>
     )
 }
