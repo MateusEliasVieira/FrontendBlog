@@ -39,3 +39,9 @@ input{
 .btn{
     margin-top: 10px;
 }
+.box-loading{
+    width: 250px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
