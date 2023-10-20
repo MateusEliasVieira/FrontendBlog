@@ -9,7 +9,9 @@
     padding: 20px;
 }
 .title-post{
+    max-height: 40px;
     text-align: left;
+    overflow-y: scroll;
 }
 .box-date-user{
     display: flex;

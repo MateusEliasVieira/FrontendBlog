@@ -61,8 +61,10 @@ const FormLogin:React.FC = () => {
                 <GoogleLogin
                     
                     onSuccess={credentialResponse => {
-                        var decoded = jwt_decode(credentialResponse.credential)
-                        console.log(decoded);
+                        if (credentialResponse.credential != null) {
+                            var decoded = jwt_decode(credentialResponse.credential)
+                            console.log(decoded);
+                        }
                     }}
                     onError={() => {
                         console.log('Login Failed');

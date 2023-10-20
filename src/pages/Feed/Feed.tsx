@@ -2,10 +2,14 @@ import React, {useEffect, useState} from "react";
 import Post from "../../components/post/Post.tsx";
 import "./Feed.css"
 import MyNavbar from "../../components/mynavbar/MyNavbar.tsx";
+import Pagination from "../../components/pagination/Pagination.tsx";
 
 const Feed:React.FC = ()=>{
 
     const[data,setData]=useState([])
+    const[numberPage,setNumberPage]=useState(0)
+    const[qtdPages,setQtdPages]=useState(0)
+    const[qtdPosts,setQtdPosts]=useState(0)
 
     useEffect(() => {
         if(!localStorage.getItem("token")){
@@ -13,13 +17,13 @@ const Feed:React.FC = ()=>{
         }else{
             findAllPosts()
         }
-    }, []);
+    }, [numberPage]);
 
     const findAllPosts = async ()=>{
         console.log("TOken "+localStorage.getItem("token"))
         try {
             // Resolve()
-            const response = await fetch("http://localhost:8080/posts/all",{
+            const response = await fetch(`http://localhost:8080/posts/page/${numberPage}`,{
                 headers:{
                     "Content-Type":"application/json",
                     "Authorization":`Bearer ${localStorage.getItem("token")}`
@@ -28,7 +32,9 @@ const Feed:React.FC = ()=>{
             })
             const json = await response.json()
             console.log(json)
-            setData(json)
+            setData(json.listPostsOutput)
+            setQtdPages(json.qtdPages)
+            setQtdPosts(json.qtdPosts)
         }catch (e) {
             // Reject()
             console.log(e)
@@ -67,6 +73,7 @@ const Feed:React.FC = ()=>{
                     ))
                 }
             </section>
+            <Pagination qtdPages={qtdPages} qtdPosts={qtdPosts} setNumberPage={setNumberPage}/>
         </section>
         </>
     )
