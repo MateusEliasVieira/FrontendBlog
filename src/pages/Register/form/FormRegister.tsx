@@ -5,6 +5,7 @@ import MyInput from "../../../components/myinput/MyInput.tsx";
 import MyTextArea from "../../../components/mytextarea/MyTextArea.tsx";
 import axios from "axios";
 import Alert from "../../../components/alerts/Alert.tsx";
+import {ENDPOINT_NEW_USER} from "../../../global/Global.ts";
 
 const FormRegister:React.FC = () => {
 
@@ -31,15 +32,14 @@ const FormRegister:React.FC = () => {
         });
         if(count === 0){
             setLoading(true)
-            axios.post("http://localhost:8080/user/new",data)
+            axios.post(ENDPOINT_NEW_USER,data)
                 .then((response)=>{
                     setResponse(response.data.message)
                     setStatus(response.status)
                     setLoading(false)
                     setTimeout(()=>{ setStatus(0); window.location.href = "/" },5000)
                 })
-                .catch((err)=>{
-                    console.log("Erro = "+err)
+                .catch(()=>{
                     setResponse("Error registering new user!")
                     setLoading(false)
                 })

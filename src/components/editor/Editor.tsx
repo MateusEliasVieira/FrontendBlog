@@ -4,6 +4,7 @@ import "./Editor.css"
 import MyInput from "../myinput/MyInput.tsx";
 import Alert from "../alerts/Alert.tsx";
 import imageToBase64 from "../../utils/imageToBase64.ts";
+import {ENDPOINT_NEW_POSTS} from "../../global/Global.ts";
 
 const Editor:React.FC = ()=>{
 
@@ -63,7 +64,7 @@ const Editor:React.FC = ()=>{
 
 	const sendData = async (base64: unknown) => {
 		let data = { "title": title, "content": content, "image": base64,user:{idUser:localStorage.getItem("idUser")} }; // Passa o base64 para a função sendData
-		const response = await fetch("http://localhost:8080/posts/new", {
+		const response = await fetch(ENDPOINT_NEW_POSTS, {
 			headers: {
 				"Content-Type": "application/json",
 				"Authorization": `Bearer ${token}`

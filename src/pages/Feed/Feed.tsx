@@ -3,6 +3,7 @@ import Post from "../../components/post/Post.tsx";
 import "./Feed.css"
 import MyNavbar from "../../components/mynavbar/MyNavbar.tsx";
 import Pagination from "../../components/pagination/Pagination.tsx";
+import {ENDPOINT_PAGINATION_POSTS} from "../../global/Global.ts";
 
 const Feed:React.FC = ()=>{
 
@@ -20,10 +21,9 @@ const Feed:React.FC = ()=>{
     }, [numberPage]);
 
     const findAllPosts = async ()=>{
-        console.log("TOken "+localStorage.getItem("token"))
         try {
             // Resolve()
-            const response = await fetch(`http://localhost:8080/posts/page/${numberPage}`,{
+            const response = await fetch(`${ENDPOINT_PAGINATION_POSTS}${numberPage}`,{
                 headers:{
                     "Content-Type":"application/json",
                     "Authorization":`Bearer ${localStorage.getItem("token")}`
@@ -31,7 +31,6 @@ const Feed:React.FC = ()=>{
                 method:"GET"
             })
             const json = await response.json()
-            console.log(json)
             setData(json.listPostsOutput)
             setQtdPages(json.qtdPages)
             setQtdPosts(json.qtdPosts)

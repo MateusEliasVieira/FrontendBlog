@@ -35,10 +35,9 @@ const Pagination:React.FC<Props> = (props:Props) =>{
                             event.preventDefault();
                             setPage(page - 1 >= 0 ? page - 1 : page)
                             props.setNumberPage(page)
-                            console.log("voltou para pagina "+page)
                         }}>Previous</button>
                     </li>
-                    {}
+
                     {pages.map((li)=>(li))}
 
                     <li className="page-item">
@@ -46,7 +45,6 @@ const Pagination:React.FC<Props> = (props:Props) =>{
                             event.preventDefault();
                             setPage(page + 1 <= props.qtdPages - 1 ? page + 1 : page)
                             props.setNumberPage(page)
-                            console.log("foi para pagina "+page)
                         }}>Next</button>
                     </li>
                 </ul>

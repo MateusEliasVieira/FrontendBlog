@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react"
 import "./ReadPost.css"
 import MyNavbar from "../../components/mynavbar/MyNavbar.tsx";
 import {useParams} from "react-router-dom";
+import {ENDPOINT_SEARCH_POST} from "../../global/Global.ts";
 
 const ReadPost:React.FC = ()=>{
 
@@ -17,7 +18,7 @@ const ReadPost:React.FC = ()=>{
     })
 
     const searchPost = async ()=>{
-        const response = await fetch(`http://localhost:8080/posts/read-post/${idPost}`, {
+        const response = await fetch(`${ENDPOINT_SEARCH_POST}${idPost}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("token")}`

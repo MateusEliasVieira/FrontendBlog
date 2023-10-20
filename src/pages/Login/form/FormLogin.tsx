@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 import "./FormLogin.css"
 import Alert from "../../../components/alerts/Alert.tsx";
 import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
+import {ENDPOINT_LOGIN} from "../../../global/Global.ts";
 
 const FormLogin:React.FC = () => {
 
@@ -24,7 +25,7 @@ const FormLogin:React.FC = () => {
             try{
                 // Resolve()
                 const response = await fetch(
-                    "http://localhost:8080/login/enter", {
+                    ENDPOINT_LOGIN, {
                         method:"POST",
                         headers:{
                             'Content-Type': 'application/json'
@@ -32,7 +33,6 @@ const FormLogin:React.FC = () => {
                         body: JSON.stringify({"username":username,"password":password})
                 })
                 const {idUser,token} = await response.json();
-                console.log(token)
                 localStorage.clear()
                 localStorage.setItem("idUser",idUser);
                 localStorage.setItem("token",token);

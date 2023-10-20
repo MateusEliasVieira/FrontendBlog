@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import "./MyNavbar.css"
 import {BsFillPersonFill} from "react-icons/bs";
 import {AiOutlineLogout} from "react-icons/ai";
+import {ENDPOINT_FIND_USER} from "../../global/Global.ts";
 
 const MyNavbar:React.FC = ()=> {
 
@@ -20,7 +21,7 @@ const MyNavbar:React.FC = ()=> {
 
     const findUser = async (idUser:number,token:string)=>{
         try {
-           const response = await fetch(`http://localhost:8080/user/find/${idUser}`,
+           const response = await fetch(`${ENDPOINT_FIND_USER}${idUser}`,
                {
                    headers:{
                        "Content-Type":"application/json",
@@ -29,7 +30,6 @@ const MyNavbar:React.FC = ()=> {
                    method:"GET"
                });
            const json = await response.json();
-           console.log(json)
            setName(json.name)
         }catch (e) {
             console.log(e)
