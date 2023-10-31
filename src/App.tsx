@@ -5,6 +5,7 @@
  import Register from "./pages/Register/Register.tsx";
  import NewPost from "./pages/NewPost/NewPost.tsx";
  import ReadPost from "./pages/ReadPost/ReadPost.tsx";
+ import ConfirmationAccount from "./pages/ConfirmationAccount/ConfirmationAccount.tsx";
 
  function App() {
   return(
@@ -16,6 +17,7 @@
                 <Route path="/create-account" element={<Register/>}/>
                 <Route path="/new-post" element={<NewPost/>}/>
                 <Route path="/read-post/:idPost" element={<ReadPost/>}/>
+                <Route path="/confirmation/*" element={<ConfirmationAccount/>}/>
             </Routes>
         </BrowserRouter>
   )

@@ -1,7 +1,6 @@
 import React from "react";
 import "./Post.css"
 import {Link} from "react-router-dom";
-import ReadPost from "../../pages/ReadPost/ReadPost.tsx";
 interface Props{
     key:number;
     idPost:number;
@@ -15,7 +14,7 @@ interface Props{
 }
 const Post:React.FC<Props> = (props)=>{
     return(
-        <div key={props.key} className="box-post">
+        <div key={props.idPost} className="box-post">
             <div>
                 <h5 className="title-post">{props.titlePost}</h5>
                 <div className="box-date-user">

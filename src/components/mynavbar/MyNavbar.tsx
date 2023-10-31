@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import "./MyNavbar.css"
 import {BsFillPersonFill} from "react-icons/bs";
 import {AiOutlineLogout} from "react-icons/ai";
-import {ENDPOINT_FIND_USER} from "../../global/Global.ts";
+import {ENDPOINT_FIND_USER} from "../../global/URLs.ts";
 
 const MyNavbar:React.FC = ()=> {
 

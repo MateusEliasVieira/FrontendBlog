@@ -5,7 +5,7 @@ import MyInput from "../../../components/myinput/MyInput.tsx";
 import MyTextArea from "../../../components/mytextarea/MyTextArea.tsx";
 import axios from "axios";
 import Alert from "../../../components/alerts/Alert.tsx";
-import {ENDPOINT_NEW_USER} from "../../../global/Global.ts";
+import {ENDPOINT_NEW_USER} from "../../../global/URLs.ts";
 
 const FormRegister:React.FC = () => {
 
@@ -34,16 +34,19 @@ const FormRegister:React.FC = () => {
             setLoading(true)
             axios.post(ENDPOINT_NEW_USER,data)
                 .then((response)=>{
+                    setLoading(false)
                     setResponse(response.data.message)
                     setStatus(response.status)
-                    setLoading(false)
-                    setTimeout(()=>{ setStatus(0); window.location.href = "/" },5000)
+                     if(status === 200){
+                         setTimeout(()=>{ setStatus(0); window.location.href = "/" },5000)
+                     }
                 })
-                .catch(()=>{
-                    setResponse("Error registering new user!")
+                .catch((err)=>{
+                    setResponse(err.response.data.message)
+                    setStatus(err.response.status)
                     setLoading(false)
                 })
-            console.log("status http = "+status)
+           // console.log("status http = "+status)
         }else{
             alert("Informe todos os campos")
         }
@@ -68,7 +71,20 @@ const FormRegister:React.FC = () => {
                         ""
                 }
 
-             {status !== 0 ? (<Alert typeAlert={status === 200 ? "alert alert-success" : "alert alert-danger"} message={response}/>) : ""}
+             {status !== 0 ? setTimeout(() => {
+                 setStatus(0)
+                 setResponse("")
+                 setData({
+                     name: "",
+                     email: "",
+                     username: "",
+                     password: "",
+                     about: "",
+                     photo: "",
+                 })
+             }, 5000) && (
+                 <Alert typeAlert={status === 200 ? "alert alert-success" : "alert alert-danger"}
+                        message={response}/>) : ""}
 
                 <div className="box-group-inputs-flex">
                     <MyInput

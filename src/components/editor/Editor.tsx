@@ -4,7 +4,7 @@ import "./Editor.css"
 import MyInput from "../myinput/MyInput.tsx";
 import Alert from "../alerts/Alert.tsx";
 import imageToBase64 from "../../utils/imageToBase64.ts";
-import {ENDPOINT_NEW_POSTS} from "../../global/Global.ts";
+import {ENDPOINT_NEW_POSTS} from "../../global/URLs.ts";
 
 const Editor:React.FC = ()=>{
 

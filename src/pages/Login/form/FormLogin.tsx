@@ -3,7 +3,8 @@ import jwt_decode from "jwt-decode";
 import "./FormLogin.css"
 import Alert from "../../../components/alerts/Alert.tsx";
 import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
-import {ENDPOINT_LOGIN} from "../../../global/Global.ts";
+import {ENDPOINT_LOGIN, ENDPOINT_LOGIN_GOOGLE} from "../../../global/URLs.ts";
+import axios from "axios";
 
 const FormLogin:React.FC = () => {
 
@@ -14,7 +15,6 @@ const FormLogin:React.FC = () => {
     useEffect(() => {
         localStorage.clear()
     }, []);
-
 
     const validate = () => {
         return username !== "" && password !== "";
@@ -39,7 +39,6 @@ const FormLogin:React.FC = () => {
                 window.location.href="/Feed"
             }catch (e) {
                 // Reject()
-                console.log(e)
                 setMessage("Invalid login")
             }
         }else{
@@ -59,11 +58,38 @@ const FormLogin:React.FC = () => {
             <GoogleOAuthProvider
                 clientId="35562681448-pvo40n919fgpra4o5sr96p7re3t0vlrp.apps.googleusercontent.com">
                 <GoogleLogin
-                    
                     onSuccess={credentialResponse => {
                         if (credentialResponse.credential != null) {
                             var decoded = jwt_decode(credentialResponse.credential)
-                            console.log(decoded);
+                            const { email_verified, email, sub, name, picture } = decoded as {
+                                email_verified: boolean;
+                                email: string;
+                                sub: string;
+                                name: string;
+                                picture: string;
+                            };
+                            if(email_verified){
+                                //console.log("validado")
+                                axios.post(ENDPOINT_LOGIN_GOOGLE,{
+                                    name: name,
+                                    email: email,
+                                    username: name,
+                                    password: sub,
+                                    about: "",
+                                    photo: picture,
+                                })
+                                    .then((response)=>{
+                                        localStorage.setItem("idUser",response.data.idUser);
+                                        localStorage.setItem("token",response.data.token)
+                                        window.location.href="/feed"
+                                    })
+                                    .catch((err)=>{
+                                        console.log(err.response)
+                                    })
+                            }else{
+                                console.log("não validado")
+                            }
+                            //console.log(decoded);
                         }
                     }}
                     onError={() => {

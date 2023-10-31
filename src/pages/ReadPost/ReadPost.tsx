@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import "./ReadPost.css"
 import MyNavbar from "../../components/mynavbar/MyNavbar.tsx";
 import {useParams} from "react-router-dom";
-import {ENDPOINT_SEARCH_POST} from "../../global/Global.ts";
+import {ENDPOINT_SEARCH_POST} from "../../global/URLs.ts";
 
 const ReadPost:React.FC = ()=>{
 

@@ -10,7 +10,7 @@ interface Props{
 const Pagination:React.FC<Props> = (props:Props) =>{
     const pages = [];
     const[page,setPage]=useState(0)
-    const maxShowLi = 3
+    const maxShowLi = props.qtdPages > 3 ? 3 : props.qtdPages;
 
     for (let i = 0; i < maxShowLi; i++) {
         pages.push(
@@ -20,7 +20,7 @@ const Pagination:React.FC<Props> = (props:Props) =>{
                     onClick={(event)=>{
                         event.preventDefault(); props.setNumberPage(i); setPage(i);
                     }}>
-                    {i}
+                    {i + 1}
                 </button>
             </li>
         );

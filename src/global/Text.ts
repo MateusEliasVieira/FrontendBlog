@@ -1,0 +1,1 @@
+export const EMPTY_POST = "There are no posts at the moment."

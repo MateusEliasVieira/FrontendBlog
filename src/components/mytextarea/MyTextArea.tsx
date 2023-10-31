@@ -13,7 +13,7 @@ const MyTextArea:React.FC<Props> = (props)=>{
     return(
         <Form.Group className={props.classGroup}>
             <Form.Label>{props.textLabel}</Form.Label>
-            <Form.Control as="textarea" rows={props.rows} onChange={(event)=>props.fun(event.target.value)}/>
+            <Form.Control value={props.valueTextArea} as="textarea" rows={props.rows} onChange={(event)=>props.fun(event.target.value)}/>
         </Form.Group>
     )
 }

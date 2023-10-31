@@ -15,3 +15,17 @@
     justify-content: center;
     align-items: center;
 }
+.spinner-border{
+    width: 50px;
+    height: 50px;
+    align-self: center;
+    margin: 100px auto !important;
+}
+#h2-empty-posts{
+    margin: 100px auto;
+    text-align: center;
+}
+.h1-token-expired{
+    margin: 100px auto;
+    text-align: center;
+}
