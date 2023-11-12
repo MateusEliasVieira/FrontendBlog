@@ -1,23 +1,26 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import "./ReadPost.css"
 import MyNavbar from "../../components/mynavbar/MyNavbar.tsx";
-import {useParams} from "react-router-dom";
-import {ENDPOINT_SEARCH_POST} from "../../global/URLs.ts";
+import { useParams } from "react-router-dom";
+import { ENDPOINT_SEARCH_POST } from "../../global/URLs.ts";
+import { HTTP_STATUS_FORBIDDEN } from "../../global/HTTP_STATUS.ts";
+import { Link } from "react-router-dom";
 
-const ReadPost:React.FC = ()=>{
+const ReadPost: React.FC = () => {
 
     const { idPost } = useParams(); // pega o novo valor do parametro da url de forma automatica quando muda
-
-    const[data,setData]=useState({
-        title:"",
-        content:"",
-        datePublish:"",
-        user:{
-            name:""
+    const [loading, setLoading] = useState(false)
+    const [tokenIsValid, setTokenIsValid] = useState(true)
+    const [data, setData] = useState({
+        title: "",
+        content: "",
+        datePublish: "",
+        user: {
+            name: ""
         }
     })
 
-    const searchPost = async ()=>{
+    const searchPost = async () => {
         const response = await fetch(`${ENDPOINT_SEARCH_POST}${idPost}`, {
             headers: {
                 "Content-Type": "application/json",
@@ -25,11 +28,19 @@ const ReadPost:React.FC = ()=>{
             },
             method: "GET"
         });
-        const json = await response.json();
-        setData({...json})
+
+        if (response.status !== HTTP_STATUS_FORBIDDEN) {
+            const json = await response.json();
+            setData({ ...json })
+            setLoading(false)
+            setTokenIsValid(true)
+        } else {
+            setTokenIsValid(false)
+            setLoading(false)
+        }
     }
 
-    useEffect(  () => {
+    useEffect(() => {
         searchPost()
     }, []);
 
@@ -45,15 +56,22 @@ const ReadPost:React.FC = ()=>{
         }
     }
 
-    return(
+    return (
+
         <section id="section-read-post">
-            <MyNavbar/>
-            <div>
-                <h1>{data.title}</h1>
-                <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
-                <p><b>Author</b>: {data.user.name}</p>
-                <p><b>Publish</b>: {formatDate(data.datePublish)}</p>
-            </div>
+            <MyNavbar />
+            {loading ? (<div className="spinner-border" role="status">
+                <span className="sr-only"></span>
+            </div>) : null}
+            {tokenIsValid ? (
+                <div>
+                    <h1>{data.title}</h1>
+                    <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
+                    <p><b>Author</b>: {data.user?.name}</p>
+                    <p><b>Publish</b>: {formatDate(data.datePublish)}</p>
+                </div>
+            ) : (<h1 className="h1-token-expired">Ops, session expired! <Link to={"/"}>Login</Link> </h1>)
+            }
         </section>
     )
 }
