@@ -54,7 +54,11 @@ const FormLogin: React.FC = () => {
                 onClick={(event) => {
                     event.preventDefault(); sendData();
                 }}>Enter</button>
-            <a href="/create-account">Create account</a>
+            <div id="div-links">
+                <a href="/create-account">Create account</a>
+                <a href="/recover-account">Forgot my password</a>
+            </div>
+
             <GoogleOAuthProvider
                 clientId="35562681448-pvo40n919fgpra4o5sr96p7re3t0vlrp.apps.googleusercontent.com">
                 <GoogleLogin

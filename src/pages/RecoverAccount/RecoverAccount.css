@@ -1,0 +1,27 @@
+#section-recover-account {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#section-recover-account>h5 {
+    padding: 10px;
+}
+
+#section-recover-account>.form-recover {
+    width: 350px;
+    height: 200px;
+    padding: 30px;
+    box-shadow: 0px 0px 40px #dcdada;
+}
+
+#section-recover-account>.form-recover>input {
+    margin: 10px auto;
+}
+
+.btn {
+    width: 100% !important;
+}
