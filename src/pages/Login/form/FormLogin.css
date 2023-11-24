@@ -32,6 +32,10 @@
     color: dodgerblue;
 }
 
+#box-button-login-google {
+    margin: 15px auto;
+}
+
 .form-login>button {
     width: 100px;
 }

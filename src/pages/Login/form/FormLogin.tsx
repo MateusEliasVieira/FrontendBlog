@@ -20,27 +20,24 @@ const FormLogin: React.FC = () => {
         return username !== "" && password !== "";
     };
 
-    const sendData = async () => {
+    const sendData = () => {
         if (validate()) {
-            try {
-                // Resolve()
-                const response = await fetch(
-                    ENDPOINT_LOGIN, {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ "username": username, "password": password })
+            // Resolve()
+            axios.post(ENDPOINT_LOGIN, { "username": username, "password": password })
+                .then((response) => {
+                    const idUser = response.data.idUser
+                    const token = response.data.token
+                    if (idUser && token) {
+                        localStorage.clear()
+                        localStorage.setItem("idUser", idUser);
+                        localStorage.setItem("token", token);
+                        window.location.href = "/Feed"
+                    } else { console.log("Empty token of the request login!") }
                 })
-                const { idUser, token } = await response.json();
-                localStorage.clear()
-                localStorage.setItem("idUser", idUser);
-                localStorage.setItem("token", token);
-                window.location.href = "/Feed"
-            } catch (e) {
-                // Reject()
-                setMessage("Invalid login")
-            }
+                .catch((error) => {
+                    console.log(error)
+                    setMessage(error.response.data.message)
+                })
         } else {
             setMessage("Fill in all fields!")
         }
@@ -54,59 +51,59 @@ const FormLogin: React.FC = () => {
                 onClick={(event) => {
                     event.preventDefault(); sendData();
                 }}>Enter</button>
+            <div id="box-button-login-google">
+                <GoogleOAuthProvider
+                    clientId="35562681448-pvo40n919fgpra4o5sr96p7re3t0vlrp.apps.googleusercontent.com">
+                    <GoogleLogin size="large" width={320}
+                        onSuccess={credentialResponse => {
+                            if (credentialResponse.credential != null) {
+                                var decoded = jwt_decode(credentialResponse.credential)
+                                const { email_verified, email, sub, name, picture } = decoded as {
+                                    email_verified: boolean;
+                                    email: string;
+                                    sub: string;
+                                    name: string;
+                                    picture: string;
+                                };
+                                if (email_verified) {
+                                    const axiosInstance = axios.create({
+                                        headers: {
+                                            'Authorization': `Bearer ${localStorage.getItem("token")}`, // Define o cabeçalho de autenticação com o token},
+                                        }
+                                    });
+                                    axiosInstance.post(ENDPOINT_LOGIN_GOOGLE, {
+                                        name: name,
+                                        email: email,
+                                        username: name,
+                                        password: sub,
+                                        about: "Empty about",
+                                        photo: picture,
+                                    })
+                                        .then((response) => {
+                                            localStorage.setItem("idUser", response.data.idUser);
+                                            localStorage.setItem("token", response.data.token)
+                                            window.location.href = "/feed"
+                                        })
+                                        .catch((err) => {
+                                            console.log(err.response)
+                                        })
+                                } else {
+                                    console.log("não validado")
+                                }
+                                //console.log(decoded);
+                            }
+                        }}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
+                        useOneTap
+                    />
+                </GoogleOAuthProvider>
+            </div>
             <div id="div-links">
                 <a href="/create-account">Create account</a>
                 <a href="/recover-account">Forgot my password</a>
             </div>
-
-            <GoogleOAuthProvider
-                clientId="35562681448-pvo40n919fgpra4o5sr96p7re3t0vlrp.apps.googleusercontent.com">
-                <GoogleLogin
-                    onSuccess={credentialResponse => {
-                        if (credentialResponse.credential != null) {
-                            var decoded = jwt_decode(credentialResponse.credential)
-                            const { email_verified, email, sub, name, picture } = decoded as {
-                                email_verified: boolean;
-                                email: string;
-                                sub: string;
-                                name: string;
-                                picture: string;
-                            };
-                            if (email_verified) {
-                                const axiosInstance = axios.create({
-                                    headers: {
-                                        'Authorization': `Bearer ${localStorage.getItem("token")}`, // Define o cabeçalho de autenticação com o token},
-                                    }
-                                });
-                                axiosInstance.post(ENDPOINT_LOGIN_GOOGLE, {
-                                    name: name,
-                                    email: email,
-                                    username: name,
-                                    password: sub,
-                                    about: "Empty about",
-                                    photo: picture,
-                                })
-                                    .then((response) => {
-                                        localStorage.setItem("idUser", response.data.idUser);
-                                        localStorage.setItem("token", response.data.token)
-                                        window.location.href = "/feed"
-                                    })
-                                    .catch((err) => {
-                                        console.log(err.response)
-                                    })
-                            } else {
-                                console.log("não validado")
-                            }
-                            //console.log(decoded);
-                        }
-                    }}
-                    onError={() => {
-                        console.log('Login Failed');
-                    }}
-                    useOneTap
-                />
-            </GoogleOAuthProvider>
-
 
         </div>
     )

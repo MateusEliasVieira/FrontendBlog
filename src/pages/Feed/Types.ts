@@ -4,7 +4,7 @@ interface PostData {
     image: string;
     datePublish: string;
     content: string;
-    userOutputDTO: {
+    user: {
         idUser: number;
         name: string;
         about: string;

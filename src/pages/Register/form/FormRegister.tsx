@@ -43,13 +43,14 @@ const FormRegister: React.FC = () => {
                     }
                 })
                 .catch((err) => {
+                    console.log(err)
                     setResponse(err.response.data.message)
                     setStatus(err.response.status)
                     setLoading(false)
                 })
         } else {
             setStatus(400)
-            setResponse("Informe todos os campos")
+            setResponse("Enter all fields!")
         }
 
     }
@@ -130,11 +131,12 @@ const FormRegister: React.FC = () => {
                 fun={(newValue) => { setData({ ...data, image: newValue }) }} />
 
             <button
+                id="button-create-account"
                 className="btn btn-dark"
                 onClick={(event) => {
                     event.preventDefault()
                     sendMyData()
-                }}>Register <BsCupHotFill />
+                }}>Create My Account <BsCupHotFill />
             </button>
             <a href="/">Sign-in</a>
         </div>

@@ -90,7 +90,7 @@ const Feed: React.FC = () => {
                                         idPost={post.idPost}
                                         titlePost={post.title}
                                         srcImage={post.image}
-                                        nameUserPost={post.userOutputDTO?.name}
+                                        nameUserPost={post.user?.name}
                                         datePublishPost={formatDate(post.datePublish)}
                                         widthImage="100%"
                                         heightImage="200"
