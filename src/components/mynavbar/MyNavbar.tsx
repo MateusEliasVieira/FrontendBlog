@@ -10,6 +10,8 @@ import axios from "axios";
 const MyNavbar: React.FC = () => {
 
   const [name, setName] = useState("")
+  const [role, setRole] = useState("")
+
 
   useEffect(() => {
     const idUserString = localStorage.getItem("idUser");
@@ -31,6 +33,7 @@ const MyNavbar: React.FC = () => {
       .then((response) => {
         const data = response.data;
         setName(data.name)
+        setRole(data.role)
       })
       .catch((e) => {
         console.log(e);
@@ -41,17 +44,20 @@ const MyNavbar: React.FC = () => {
   return (
     <Navbar className="bg-body-tertiary">
       <Container id="container-data-navbar">
-        <Navbar.Brand href="/feed">{name && name ? `Hi ${name.split(" ")[0]}` : "Hi User"}<BsFillPersonFill /></Navbar.Brand>
+        <Navbar.Brand href="/feed">{name ? `Olá ${name.split(" ")[0]}` : ""}<BsFillPersonFill /></Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>
-            <a className="link-navbar-options" href="/new-post">New</a>
-          </Navbar.Text>
+          {
+            role === "ROLE_ADMIN" ?
+              (<Navbar.Text>
+                <a className="link-navbar-options" href="/new-post">Novo</a>
+              </Navbar.Text>) : null
+          }
           <Navbar.Text>
             <a className="link-navbar-options" href="/feed">Feed</a>
           </Navbar.Text>
           <Navbar.Text>
-            <a className="link-navbar-options" href="/logoff">Logoff <AiOutlineLogout /></a>
+            <a className="link-navbar-options" href="/logoff">Sair <AiOutlineLogout /></a>
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>

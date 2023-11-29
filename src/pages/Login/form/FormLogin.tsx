@@ -34,23 +34,22 @@ const FormLogin: React.FC = () => {
                         window.location.href = "/Feed"
                     } else { console.log("Empty token of the request login!") }
                 })
-                .catch((error) => {
-                    console.log(error)
-                    setMessage(error.response.data.message)
+                .catch(() => {
+                    setMessage("Login inválido!")
                 })
         } else {
-            setMessage("Fill in all fields!")
+            setMessage("Informe todos os campos!")
         }
     }
     return (
         <div className="form-login">
-            {message != "" ? <Alert typeAlert="alert alert-danger" message={message} /> : <h4>Hi User!</h4>}
-            <input className="form form-control" type="text" placeholder="Username" onChange={event => setUsername(event.target.value)} />
-            <input className="form form-control" type="password" placeholder="Password" onChange={event => setPassword(event.target.value)} />
+            {message != "" ? <Alert typeAlert="alert alert-danger" message={message} /> : <h4>Bem Vindo!</h4>}
+            <input className="form form-control" type="text" placeholder="Nome de usuário" onChange={event => setUsername(event.target.value)} />
+            <input className="form form-control" type="password" placeholder="Senha" onChange={event => setPassword(event.target.value)} />
             <button className="btn btn-outline-dark"
                 onClick={(event) => {
                     event.preventDefault(); sendData();
-                }}>Enter</button>
+                }}>Entrar</button>
             <div id="box-button-login-google">
                 <GoogleOAuthProvider
                     clientId="35562681448-pvo40n919fgpra4o5sr96p7re3t0vlrp.apps.googleusercontent.com">
@@ -101,8 +100,8 @@ const FormLogin: React.FC = () => {
                 </GoogleOAuthProvider>
             </div>
             <div id="div-links">
-                <a href="/create-account">Create account</a>
-                <a href="/recover-account">Forgot my password</a>
+                <a href="/create-account">Criar minha conta</a>
+                <a href="/recover-account">Esqueci minha senha</a>
             </div>
 
         </div>

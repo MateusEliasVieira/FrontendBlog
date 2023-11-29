@@ -4,7 +4,6 @@ import "./Feed.css"
 import MyNavbar from "../../components/mynavbar/MyNavbar.tsx";
 import Pagination from "../../components/pagination/Pagination.tsx";
 import { ENDPOINT_PAGINATION_POSTS } from "../../global/URLs.ts";
-import { EMPTY_POST } from "../../global/Text.ts";
 import { HTTP_STATUS_FORBIDDEN } from "../../global/HTTP_STATUS.ts";
 import { Link } from "react-router-dom";
 import PostData from "./Types.ts";
@@ -16,7 +15,6 @@ const Feed: React.FC = () => {
     const [qtdPages, setQtdPages] = useState(0)
     const [qtdPosts, setQtdPosts] = useState(0)
     const [loading, setLoading] = useState(false)
-    const [existPosts, setExistPosts] = useState(false)
     const [tokenIsValid, setTokenIsValid] = useState(true)
 
     useEffect(() => {
@@ -45,7 +43,6 @@ const Feed: React.FC = () => {
                 setQtdPages(json.qtdPages)
                 setQtdPosts(json.qtdPosts)
                 setLoading(false)
-                setExistPosts(qtdPosts != 0)
                 setTokenIsValid(true)
             } else {
                 setTokenIsValid(false)
@@ -81,9 +78,6 @@ const Feed: React.FC = () => {
                             </div>) : null
                         }
                         {
-                            existPosts ? (<h2 id="h2-empty-posts">{EMPTY_POST}</h2>) : null
-                        }
-                        {
                             data.length != 0 ?
                                 data.map((post) => (
                                     <Post key={post.idPost}
@@ -100,7 +94,7 @@ const Feed: React.FC = () => {
                                 :
                                 null
                         }
-                    </section>) : (<h1 className="h1-token-expired">Ops, session expired! <Link to={"/"}>Login</Link> </h1>)}
+                    </section>) : (<h1 className="h1-token-expired">Ops, sessão expirada! <Link to={"/"}>Login</Link> </h1>)}
                 {data.length != 0 ? <Pagination qtdPages={qtdPages} qtdPosts={qtdPosts} setNumberPage={setNumberPage} /> : null}
             </section>
         </>

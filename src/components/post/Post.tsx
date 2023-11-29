@@ -18,12 +18,12 @@ const Post: React.FC<Props> = (props) => {
             <div>
                 <h5 className="title-post">{props.titlePost}</h5>
                 <div className="box-date-user">
-                    <p>Date: {props.datePublishPost}</p>
-                    <p>Author: {props.nameUserPost}</p>
+                    <p>Data: {props.datePublishPost}</p>
+                    <p>Autor: {props.nameUserPost}</p>
                 </div>
             </div>
             <img src={props.srcImage} width={props.widthImage} height={props.heightImage} />
-            <Link className="link-continue-reading" to={`/read-post/${props.idPost}`}>Continue reading...</Link>
+            <Link className="link-continue-reading" to={`/read-post/${props.idPost}`}>Continuar lendo...</Link>
         </div>
     )
 }

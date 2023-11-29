@@ -15,16 +15,17 @@ const RecoverAccount: React.FC = () => {
         axios.get(ENDPOINT_RECOVER_ACCOUNT + email)
             .then((response) => {
                 if (response.status === HTTP_STATUS_OK) {
+                    console.log(response)
                     setTextButton("Submit")
                     setLoading(false)
-                    alert(response.data)
+                    alert(response?.data)
                 }
             })
             .catch((error) => {
                 console.log(error)
                 setTextButton("Submit")
                 setLoading(false)
-                alert(error.response.data)
+                alert(error.response?.data)
             })
     }
     return (

@@ -12,6 +12,7 @@ const FormRegister: React.FC = () => {
     const [status, setStatus] = useState(0)
     const [loading, setLoading] = useState(false)
     const [response, setResponse] = useState("")
+    const [responseError, setResponseError] = useState([])
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -35,8 +36,8 @@ const FormRegister: React.FC = () => {
             axios.post(ENDPOINT_NEW_USER, data)
                 .then((response) => {
                     setLoading(false)
-                    setResponse(response.data.message)
-                    setStatus(response.status)
+                    setResponse(response?.data?.message)
+                    setStatus(response?.status)
 
                     if (status === 200) {
                         setTimeout(() => { setStatus(0); window.location.href = "/" }, 5000)
@@ -44,19 +45,19 @@ const FormRegister: React.FC = () => {
                 })
                 .catch((err) => {
                     console.log(err)
-                    setResponse(err.response.data.message)
-                    setStatus(err.response.status)
+                    setResponseError(err?.response?.data)
+                    setStatus(err?.response?.status)
                     setLoading(false)
                 })
         } else {
             setStatus(400)
-            setResponse("Enter all fields!")
+            setResponse("Informe todos os campos!")
         }
 
     }
     return (
         <div className="form-create-account">
-            <legend>Welcome user</legend>
+            <legend>Bem Vindo</legend>
             {
                 loading
                     ?
@@ -65,7 +66,7 @@ const FormRegister: React.FC = () => {
                             <div className="spinner-grow" role="status">
                                 <span className="sr-only"></span>
                             </div>
-                            <p>Sending confirmation email...</p>
+                            <p> Enviando email de confirmação... </p>
                         </div>
 
                     )
@@ -73,31 +74,24 @@ const FormRegister: React.FC = () => {
                     ""
             }
 
-            {status !== 0 ? setTimeout(() => {
+            {status === 200 ? setTimeout(() => {
                 setStatus(0)
-                setResponse("")
-                setData({
-                    name: "",
-                    email: "",
-                    username: "",
-                    password: "",
-                    about: "",
-                    image: "",
-                })
-            }, 10000) && (
-                    <Alert typeAlert={status === 200 ? "alert alert-success" : "alert alert-danger"}
-                        message={response} />) : ""}
+            }, 10000) && (<Alert typeAlert={"alert alert-success"} message={response} />) : ""}
+
+            {status >= 400 ? setTimeout(() => {
+                setStatus(0)
+            }, 10000) && (<Alert typeAlert={"alert alert-danger"} message={responseError[0]} />) : ""}
 
             <div className="box-group-inputs-flex">
                 <MyInput
                     classGroup="box-label-input space-right"
-                    textLabel="Name *"
+                    textLabel="Nome *"
                     typeInput="text"
                     valueInput={data.name}
                     fun={(newValue) => { setData({ ...data, name: newValue }) }} />
                 <MyInput
                     classGroup="box-label-input"
-                    textLabel="Email"
+                    textLabel="Email *"
                     typeInput="email"
                     valueInput={data.email}
                     fun={(newValue) => { setData({ ...data, email: newValue }) }} />
@@ -105,27 +99,27 @@ const FormRegister: React.FC = () => {
             <div className="box-group-inputs-flex">
                 <MyInput
                     classGroup="box-label-input space-right"
-                    textLabel="Username *"
+                    textLabel="Nome de usuário *"
                     typeInput="text"
                     valueInput={data.username}
                     fun={(newValue) => { setData({ ...data, username: newValue }) }} />
                 <MyInput
                     classGroup="box-label-input"
-                    textLabel="Password *"
+                    textLabel="Senha *"
                     typeInput="password"
                     valueInput={data.password}
                     fun={(newValue) => { setData({ ...data, password: newValue }) }} />
             </div>
             <MyTextArea
                 classGroup="mb-3"
-                textLabel="About"
+                textLabel="Sobre você *"
                 rows={5}
                 valueTextArea={data.about}
                 fun={(newValue) => { setData({ ...data, about: newValue }) }} />
 
             <MyInput
                 classGroup="mb-3"
-                textLabel="Your photo"
+                textLabel="Sua foto *"
                 typeInput="file"
                 valueInput=""
                 fun={(newValue) => { setData({ ...data, image: newValue }) }} />
@@ -136,11 +130,11 @@ const FormRegister: React.FC = () => {
                 onClick={(event) => {
                     event.preventDefault()
                     sendMyData()
-                }}>Create My Account <BsCupHotFill />
+                }}>Criar minha conta <BsCupHotFill />
             </button>
-            <a href="/">Sign-in</a>
+            <a href="/">Login</a>
         </div>
     )
 }
 
-export default FormRegister
+export default FormRegister;
