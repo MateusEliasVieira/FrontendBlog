@@ -4,7 +4,7 @@ import "./Feed.css"
 import MyNavbar from "../../components/mynavbar/MyNavbar.tsx";
 import Pagination from "../../components/pagination/Pagination.tsx";
 import { ENDPOINT_PAGINATION_POSTS } from "../../global/URLs.ts";
-import { HTTP_STATUS_FORBIDDEN } from "../../global/HTTP_STATUS.ts";
+import { HTTP_STATUS_BAD_REQUEST } from "../../global/HTTP_STATUS.ts";
 import { Link } from "react-router-dom";
 import PostData from "./Types.ts";
 
@@ -36,7 +36,7 @@ const Feed: React.FC = () => {
                 },
                 method: "GET"
             })
-            if (response.status !== HTTP_STATUS_FORBIDDEN) {
+            if (response.status !== HTTP_STATUS_BAD_REQUEST) {
                 const json = await response.json()
                 console.log(json)
                 setData(json.listPostsOutput)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./NewPassword.css"
-import { HTTP_STATUS_FORBIDDEN, HTTP_STATUS_OK } from "../../global/HTTP_STATUS";
+import { HTTP_STATUS_OK } from "../../global/HTTP_STATUS";
 import { ENDPOINT_NEW_PASSWORD } from "../../global/URLs";
 
 const NewPassword: React.FC = () => {
@@ -15,40 +15,37 @@ const NewPassword: React.FC = () => {
     })
 
     const send = () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json', // Indica que o conteúdo é JSON
-                'Authorization': 'Bearer ' + token, // Cabeçalho de autorização
-            }
-        };
-        axios.post(ENDPOINT_NEW_PASSWORD, { token: token, newpassword: newpassword }, config)
-            .then((response) => {
-                console.log(response.data)
-                if (response.status === HTTP_STATUS_OK) {
-                    alert(response.data)
-                    setTimeout(() => {
+        if (newpassword) {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json', // Indica que o conteúdo é JSON
+                    'Authorization': 'Bearer ' + token, // Cabeçalho de autorização
+                }
+            };
+            axios.post(ENDPOINT_NEW_PASSWORD, { token: token, newpassword: newpassword }, config)
+                .then((response) => {
+                    console.log(response.data)
+                    if (response.status === HTTP_STATUS_OK) {
+                        alert(response?.data?.message)
                         window.location.href = "/"
-                    }, 5000)
-                } else {
-                    alert(response.data)
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-                if (error.response.status === HTTP_STATUS_FORBIDDEN) {
-                    alert("Password change timeout!")
-                } else {
-                    alert(error.response.data)
-                }
-            })
+                    } else {
+                        alert(response?.data?.title)
+                    }
+                })
+                .catch((error) => {
+                    alert(error?.response?.data?.title)
+                })
+        } else {
+            alert("Informe a nova senha!")
+        }
     }
 
     return (
         <section id="section-new-password">
             <div className="form-new-password">
-                <h5>Set new password</h5>
-                <input className="form form-control" type="password" placeholder="New password" onChange={(event) => { setNewPassword(event.target.value) }} />
-                <button onClick={() => { send() }} className="btn btn-outline-dark">Save</button>
+                <h5>Informe a nova senha!</h5>
+                <input className="form form-control" type="password" placeholder="Nova senha" onChange={(event) => { setNewPassword(event.target.value) }} />
+                <button onClick={() => { send() }} className="btn btn-outline-dark">Salvar</button>
             </div>
         </section>
     )

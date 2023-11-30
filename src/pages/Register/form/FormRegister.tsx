@@ -23,38 +23,36 @@ const FormRegister: React.FC = () => {
     });
 
     const sendMyData = () => {
-        let count = 0;
-        setStatus(0)
-        setResponse("")
-        Object.values(data).forEach((value) => {
-            if (!value) {
-                count += 1
-            }
-        });
-        if (count === 0) {
-            setLoading(true)
-            axios.post(ENDPOINT_NEW_USER, data)
-                .then((response) => {
-                    setLoading(false)
-                    setResponse(response?.data?.message)
-                    setStatus(response?.status)
+        // setStatus(0);
+        // setResponse("");
+        // setResponseError([]);
 
-                    if (status === 200) {
-                        setTimeout(() => { setStatus(0); window.location.href = "/" }, 5000)
-                    }
-                })
-                .catch((err) => {
-                    console.log(err)
-                    setResponseError(err?.response?.data)
-                    setStatus(err?.response?.status)
-                    setLoading(false)
-                })
-        } else {
-            setStatus(400)
-            setResponse("Informe todos os campos!")
-        }
+        // try {
+        //     const response = await axios.post(ENDPOINT_NEW_USER, data);
+        //     setResponse(response.data.message);
+        //     setStatus(response.status);
 
-    }
+        //     if (response.status === 200) {
+        //         setLoading(false);
+        //         setTimeout(() => window.location.href = "/", 5000);
+        //     }
+        // } catch (error: Error) {
+        //     console.error(error);
+        //     if (error.response) {
+        //         setResponseError(error.response.data);
+        //         setStatus(error.response.status);
+        //     } else if (error.request) {
+        //         setResponseError(["Erro de rede. Tente novamente mais tarde."]);
+        //         setStatus(500);
+        //     } else {
+        //         setResponseError(["Ocorreu um erro inesperado. Tente novamente mais tarde."]);
+        //         setStatus(500);
+        //     }
+
+        //     setLoading(false);
+        // }
+    };
+
     return (
         <div className="form-create-account">
             <legend>Bem Vindo</legend>
@@ -74,55 +72,71 @@ const FormRegister: React.FC = () => {
                     ""
             }
 
-            {status === 200 ? setTimeout(() => {
-                setStatus(0)
-            }, 10000) && (<Alert typeAlert={"alert alert-success"} message={response} />) : ""}
+            <div className="box-group-inputs">
 
-            {status >= 400 ? setTimeout(() => {
-                setStatus(0)
-            }, 10000) && (<Alert typeAlert={"alert alert-danger"} message={responseError[0]} />) : ""}
+                <div className="box-group-inputs-block-one">
 
-            <div className="box-group-inputs-flex">
-                <MyInput
-                    classGroup="box-label-input space-right"
-                    textLabel="Nome *"
-                    typeInput="text"
-                    valueInput={data.name}
-                    fun={(newValue) => { setData({ ...data, name: newValue }) }} />
-                <MyInput
-                    classGroup="box-label-input"
-                    textLabel="Email *"
-                    typeInput="email"
-                    valueInput={data.email}
-                    fun={(newValue) => { setData({ ...data, email: newValue }) }} />
+                    <div className="box-group-input-p">
+                        <MyInput
+                            classGroup="box-label-input space-right"
+                            textLabel="Nome *"
+                            typeInput="text"
+                            valueInput={data.name}
+                            fun={(newValue) => { setData({ ...data, name: newValue }) }} />
+                        <p className="p-error">Erros</p>
+                    </div>
+
+                    <div className="box-group-input-p">
+                        <MyInput
+                            classGroup="box-label-input"
+                            textLabel="Email *"
+                            typeInput="email"
+                            valueInput={data.email}
+                            fun={(newValue) => { setData({ ...data, email: newValue }) }} />
+                        <p className="p-error">Erros</p>
+                    </div>
+
+                </div>
+
             </div>
             <div className="box-group-inputs-flex">
-                <MyInput
-                    classGroup="box-label-input space-right"
-                    textLabel="Nome de usuário *"
-                    typeInput="text"
-                    valueInput={data.username}
-                    fun={(newValue) => { setData({ ...data, username: newValue }) }} />
-                <MyInput
-                    classGroup="box-label-input"
-                    textLabel="Senha *"
-                    typeInput="password"
-                    valueInput={data.password}
-                    fun={(newValue) => { setData({ ...data, password: newValue }) }} />
+                <div className="box-group-input-p">
+                    <MyInput
+                        classGroup="box-label-input space-right"
+                        textLabel="Nome de usuário *"
+                        typeInput="text"
+                        valueInput={data.username}
+                        fun={(newValue) => { setData({ ...data, username: newValue }) }} />
+                    <p className="p-error">Erros</p>
+                </div>
+                <div className="box-group-input-p">
+                    <MyInput
+                        classGroup="box-label-input"
+                        textLabel="Senha *"
+                        typeInput="password"
+                        valueInput={data.password}
+                        fun={(newValue) => { setData({ ...data, password: newValue }) }} />
+                    <p className="p-error">Erros</p>
+                </div>
             </div>
-            <MyTextArea
-                classGroup="mb-3"
-                textLabel="Sobre você *"
-                rows={5}
-                valueTextArea={data.about}
-                fun={(newValue) => { setData({ ...data, about: newValue }) }} />
-
-            <MyInput
-                classGroup="mb-3"
-                textLabel="Sua foto *"
-                typeInput="file"
-                valueInput=""
-                fun={(newValue) => { setData({ ...data, image: newValue }) }} />
+            <div className="box-group-input-p textarea">
+                <MyTextArea
+                    classGroup="mb-3"
+                    textLabel="Sobre você *"
+                    rows={5}
+                    valueTextArea={data.about}
+                    fun={(newValue) => { setData({ ...data, about: newValue }) }} />
+                <p className="p-error">Erros</p>
+            </div>
+            <div className="box-group-input-p">
+                <MyInput
+                    classGroup="mb-3"
+                    textLabel="Sua foto *"
+                    typeInput="file"
+                    valueInput=""
+                    fun={(newValue) => { setData({ ...data, image: newValue }) }} />
+                <p className="p-error">Erros</p>
+            </div>
 
             <button
                 id="button-create-account"
@@ -135,6 +149,7 @@ const FormRegister: React.FC = () => {
             <a href="/">Login</a>
         </div>
     )
+
 }
 
 export default FormRegister;

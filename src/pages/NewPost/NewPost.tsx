@@ -4,7 +4,7 @@ import Editor from "../../components/editor/Editor.tsx";
 import "./NewPost.css"
 import MyNavbar from "../../components/mynavbar/MyNavbar.tsx";
 import { ENDPOINT_FIND_USER, ENDPOINT_TEST_TOKEN_BY_REQUEST_CONTROLLER } from "../../global/URLs.ts";
-import { HTTP_STATUS_ACCEPTED, HTTP_STATUS_FORBIDDEN } from "../../global/HTTP_STATUS.ts";
+import { HTTP_STATUS_ACCEPTED, HTTP_STATUS_BAD_REQUEST } from "../../global/HTTP_STATUS.ts";
 import { Link } from "react-router-dom";
 
 const NewPost: React.FC = () => {
@@ -56,7 +56,7 @@ const NewPost: React.FC = () => {
             })
             .catch((err) => {
                 let status = err.response?.status
-                if (status == HTTP_STATUS_FORBIDDEN) {
+                if (status == HTTP_STATUS_BAD_REQUEST) {
                     setTokenIsValid(false)
                 } else {
                     setTokenIsValid(true)

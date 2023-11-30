@@ -27,8 +27,7 @@ input {
 
 .box-label-input {
     display: block;
-    width: 49%;
-    min-width: 360px;
+    width: 100%;
     margin: 5px auto;
 }
 
@@ -36,12 +35,33 @@ input {
     margin-right: 10px;
 }
 
-.box-group-inputs-flex {
+.box-group-inputs-flex,
+.box-group-inputs-block-one {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+@media (min-width: 600px) {
+
+    .box-group-inputs-flex,
+    .box-group-inputs-block-one {
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .box-group-input-p {
+        width: 49%;
+    }
+}
+
+.textarea {
+    width: 100%;
+}
+
+.p-error {
+    color: red;
 }
 
 .box-loading {

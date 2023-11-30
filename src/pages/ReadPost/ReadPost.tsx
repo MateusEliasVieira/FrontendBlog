@@ -3,7 +3,7 @@ import "./ReadPost.css"
 import MyNavbar from "../../components/mynavbar/MyNavbar.tsx";
 import { useParams } from "react-router-dom";
 import { ENDPOINT_SEARCH_POST } from "../../global/URLs.ts";
-import { HTTP_STATUS_FORBIDDEN } from "../../global/HTTP_STATUS.ts";
+import { HTTP_STATUS_BAD_REQUEST } from "../../global/HTTP_STATUS.ts";
 import { Link } from "react-router-dom";
 
 const ReadPost: React.FC = () => {
@@ -29,7 +29,7 @@ const ReadPost: React.FC = () => {
             method: "GET"
         });
 
-        if (response.status !== HTTP_STATUS_FORBIDDEN) {
+        if (response.status !== HTTP_STATUS_BAD_REQUEST) {
             const json = await response.json();
             setData({ ...json })
             setLoading(false)
@@ -67,10 +67,10 @@ const ReadPost: React.FC = () => {
                 <div>
                     <h1>{data.title}</h1>
                     <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
-                    <p><b>Author</b>: {data.user?.name}</p>
-                    <p><b>Publish</b>: {formatDate(data.datePublish)}</p>
+                    <p><b>Autor</b>: {data.user?.name}</p>
+                    <p><b>Publicado</b>: {formatDate(data.datePublish)}</p>
                 </div>
-            ) : (<h1 className="h1-token-expired">Ops, session expired! <Link to={"/"}>Login</Link> </h1>)
+            ) : (<h1 className="h1-token-expired">Ops, sessão expirada! <Link to={"/"}>Login</Link> </h1>)
             }
         </section>
     )
