@@ -65,7 +65,7 @@ input {
 }
 
 .box-loading {
-    width: 250px;
+    width: 220px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

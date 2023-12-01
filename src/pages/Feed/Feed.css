@@ -22,7 +22,11 @@
     width: 50px;
     height: 50px;
     align-self: center;
-    margin: 100px auto !important;
+    /* margin: 100px auto !important; */
+    position: fixed;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+    z-index: 999;
 }
 
 #h2-empty-posts {
