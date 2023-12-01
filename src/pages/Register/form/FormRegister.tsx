@@ -23,7 +23,7 @@ const FormRegister: React.FC = () => {
         username: "",
         password: "",
         about: "",
-        image: "",
+        image: ""
     });
 
     const clearErrors = () => {
@@ -68,7 +68,6 @@ const FormRegister: React.FC = () => {
     }
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
-        console.log(selectedFile)
         setArq(selectedFile);
     };
 
@@ -201,7 +200,7 @@ const FormRegister: React.FC = () => {
             </div>
             <div className="box-group-input-p">
                 <label>Sua foto *</label>
-                <input className="mb-3" type="file" onChange={handleFileChange} />
+                <input className="form-control" type="file" onChange={handleFileChange} />
                 <p className="p-error">{imageError}</p>
             </div>
 

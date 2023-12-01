@@ -4,6 +4,7 @@ import "./FormLogin.css"
 import Alert from "../../../components/alerts/Alert.tsx";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { ENDPOINT_LOGIN, ENDPOINT_LOGIN_GOOGLE } from "../../../global/URLs.ts";
+import { imageDefaultBase64 } from "../../../global/ImageDefault.ts";
 import axios from "axios";
 
 const FormLogin: React.FC = () => {
@@ -22,7 +23,6 @@ const FormLogin: React.FC = () => {
 
     const sendData = () => {
         if (validate()) {
-            // Resolve()
             axios.post(ENDPOINT_LOGIN, { "username": username, "password": password })
                 .then((response) => {
                     const idUser = response.data.idUser
@@ -75,8 +75,8 @@ const FormLogin: React.FC = () => {
                                         email: email,
                                         username: name,
                                         password: sub,
-                                        about: "Empty about",
-                                        photo: picture,
+                                        about: "Sem nada a dizer",
+                                        image: imageDefaultBase64,
                                     })
                                         .then((response) => {
                                             localStorage.setItem("idUser", response.data.idUser);
@@ -87,13 +87,12 @@ const FormLogin: React.FC = () => {
                                             console.log(err.response)
                                         })
                                 } else {
-                                    console.log("não validado")
+                                    alert("Erro ao realizar login com Google")
                                 }
-                                //console.log(decoded);
                             }
                         }}
                         onError={() => {
-                            console.log('Login Failed');
+                            alert("Erro ao realizar login com Google")
                         }}
                         useOneTap
                     />
